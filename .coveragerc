@@ -1,0 +1,15 @@
+[report]
+omit =
+    luigi-hadoop/mrrunner.py
+    */python?.?/*
+    */site-packages/nose/*
+    *__init__*
+    *test/*
+    */luigi-hadoop/six.py
+    */.tox/*
+    */setup.py
+    hadoop_test.py
+    minicluster.py
+[run]
+parallel=True
+concurrency=multiprocessing

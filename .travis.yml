@@ -1,0 +1,42 @@
+language: python
+
+env:
+  global:
+    - PIP_DOWNLOAD_CACHE=$HOME/.pip-cache
+  matrix:
+    - TOXENV=flake8
+    - TOXENV=docs
+    - TOXENV=py27-nonhdfs
+    - TOXENV=py33-nonhdfs
+    - TOXENV=py34-nonhdfs
+    - TOXENV=py27-cdh
+
+# Python 3.5 has to go here until Travis adds it to the default build images.
+# https://github.com/travis-ci/travis-ci/issues/4794#issuecomment-143758799
+matrix:
+  include:
+    - python: 3.5
+      env: TOXENV=py35-nonhdfs
+    - python: 3.6
+      env: TOXENV=py36-nonhdfs
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.pip-cache
+
+install:
+  - pip install 'tox<3.0'
+  - pip install 'luigi>=2.6.2'
+
+script:
+  - tox --version
+  - ./scripts/ci/conditional_tox.sh
+
+branches:
+  only:
+    - master
+
+notifications:
+  email: false
